@@ -22,3 +22,9 @@ Timestamp: Thu Feb 01 2024 16:02:12 GMT-0800 (Pacific Standard Time)
 URL: /favicon.ico
 Timestamp: Thu Feb 01 2024 16:02:12 GMT-0800 (Pacific Standard Time)
 
+::1 - - [06/Feb/2024:01:49:03 +0000] "GET /secreturl HTTP/1.1" 200 51 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+::1 - - [06/Feb/2024:01:49:34 +0000] "GET /myDocumentationFile/ HTTP/1.1" 404 159 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+::1 - - [06/Feb/2024:01:55:54 +0000] "GET /Documentation/ HTTP/1.1" 200 587 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+::1 - - [06/Feb/2024:01:56:26 +0000] "GET /Documentation/ HTTP/1.1" 404 153 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+::1 - - [06/Feb/2024:01:56:30 +0000] "GET /myDocumentation/ HTTP/1.1" 200 587 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+::1 - - [06/Feb/2024:01:56:40 +0000] "GET /secreturl HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
