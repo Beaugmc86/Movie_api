@@ -4,15 +4,145 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>myFlix</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body{
+            padding: 25px 50px 50px 50px
+        }
+    </style>
 </head>
 <body>
-    <h1>myFlix</h1>
-    <p> A server-side component of a "movies" web application. <br>
+    <h1>myFlix API Documentation</h1>
+    <p> 
+        A server-side component of a "movies" web application. <br>
         The web application will provide users with access to information <br>
         about different movies, directors, and genres. Users will be able <br>
         to sign up, update their personal information, and create a list of <br>
         their favorite movies.
     </p>
-    
+    <br>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Request</th>
+                <th scope="col">URL</th>
+                <th scope="col">HTTP Method</th>
+                <th scope="col">Request body data format</th>
+                <th scope="col">Response body data format</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Return List of All movies to user. -->
+            <tr>
+                <td>Get list of all movies</td>
+                <td>/movies</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>An array of JSON objects holding data about all movies within the database</td>
+            </tr>
+
+            <!-- Return data about a single movie by TITLE to the user. -->
+            <tr>
+                <td>Get data about a single movie by title</td>
+                <td>/movies/[title]</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>
+                    A JSON object holding data about the requested movie like this:<br><br>
+                    {'title': 'Dawn of the Dead',<br>
+                    'director': 'George A. Romero',<br>
+                    'genre': 'Horror',<br>
+                    'release-year': '1978'}
+                </td>
+            </tr>
+
+            <!-- Return data about a GENRE by name/title. -->
+            <tr>
+                <td>Get list of movies by genre</td>
+                <td>/movies/genre/[genre]</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>An array of JSON objects holding data about all the movies by requested genre</td>
+            </tr>
+
+            <!-- Return data about a DIRECTOR by name. -->
+            <tr>
+                <td>Get list of movies by director</td>
+                <td>/movies/directors/[director]</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>An array of JSON objects holding data about all the movies by requested director</td>
+            </tr>
+
+            <!-- Allow new users to register. -->
+            <tr>
+                <td>Add a user</td>
+                <td>/users</td>
+                <td>POST</td>
+                <td>
+                    A JSON object holding data about the user to add, structured like:<br><br>
+                    {'Name': '[Beau]', <br>
+                    'Password': '[Password]', <br>
+                    'Email': '[email]' }
+                </td>
+                <td>
+                    A JSON object holding data about the user that was added, including their assigned id:<br><br>
+                    { 'id': '###',<br>
+                    'Name': [Beau],<br>
+                    'Password': '[Password]', <br>
+                    'Email': '[email]',}
+                </td>
+            </tr>
+
+            <!-- Allow users to update their info . -->
+            <tr>
+                <td>Update name info</td>
+                <td>/users/[name]</td>
+                <td>PUT</td>
+                <td>
+                    A JSON object holding data about the user which needs to be updated, example:<br><br>
+                    { 'name': 'req.body.name', <br>
+                    'Password': 'req.body.password', <br>
+                    'Email': 'req.body.email' }
+                </td>
+                <td>
+                    A JSON object holding data about the updated user info, example:<br><br>
+                    { 'id': '###',<br>
+                    'name': '[new name]',<br>
+                    'Password': '[password]', <br>
+                    'Email': '[email]'}
+                </td>
+            </tr>
+            
+            <!-- Allow users to deregister. -->
+            <tr>
+                <td>Remove a user</td>
+                <td>/users/[id]</td>
+                <td>DELETE</td>
+                <td>None</td>
+                <td>A text message indicating whether user was deregistered
+                </td>
+            </tr>
+
+            <!-- Allow users to add a movie to their favorites list. -->
+            <tr>
+                <td>Add a movie object to a user's favorites list</td>
+                <td>/users/[id]/[Title]</td>
+                <td>POST</td>
+                <td>None</td>
+                <td>A text message indicating whether the movie was successfully added to the user's favorited movies</td>
+            </tr>
+
+            <!-- Allow users to remove a movie from their favorites list. -->
+            <tr>
+                <td>Remove a movie from a user's favorites list</td>
+                <td>/users/[id]/[Title]</td>
+                <td>DELETE</td>
+                <td>None</td>
+                <td>A text message indicating whether the movie was successfully removed from the user's favorited movies
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>
