@@ -1,5 +1,5 @@
 const express = require('express');
-  bodyParser = require('body-parser'),
+  bodyParser = require('body-parser');
   uuid = require('uuid');
 
 const morgan = require('morgan');
@@ -141,7 +141,7 @@ app.post('/users/:Username/movies/:MovieID', async (req, res) => {
 
 // DELETE (Remove a movie from a user's list of favorites)
 app.delete('/users/:Username/movies/:MovieID', async (req, res) => {
-  await Users.findOneaAndUpdate({ Username: req.params.Username },
+  await Users.findOneAndUpdate({ Username: req.params.Username },
     {$pull: { FavoriteMovies: req.params.MovieID }
   },
   { new: true }) // This line makes sure that the updated document is returned
