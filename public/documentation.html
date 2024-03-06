@@ -81,16 +81,16 @@
                 <td>POST</td>
                 <td>
                     A JSON object holding data about the user to add, structured like:<br><br>
-                    {'Name': '[Beau]', <br>
-                    'Password': '[Password]', <br>
-                    'Email': '[email]' }
+                    {'username': '[Beau]', <br>
+                    'password': '[password]', <br>
+                    'email': '[email]' }
                 </td>
                 <td>
                     A JSON object holding data about the user that was added, including their assigned id:<br><br>
                     { 'id': '###',<br>
-                    'Name': [Beau],<br>
-                    'Password': '[Password]', <br>
-                    'Email': '[email]',}
+                    'name': [Beau],<br>
+                    'password': '[password]', <br>
+                    'email': '[email]',}
                 </td>
             </tr>
 
@@ -102,22 +102,22 @@
                 <td>
                     A JSON object holding data about the user which needs to be updated, example:<br><br>
                     { 'name': 'req.body.name', <br>
-                    'Password': 'req.body.password', <br>
-                    'Email': 'req.body.email' }
+                    'password': 'req.body.password', <br>
+                    'email': 'req.body.email' }
                 </td>
                 <td>
                     A JSON object holding data about the updated user info, example:<br><br>
                     { 'id': '###',<br>
                     'name': '[new name]',<br>
-                    'Password': '[password]', <br>
-                    'Email': '[email]'}
+                    'password': '[password]', <br>
+                    'email': '[email]'}
                 </td>
             </tr>
             
             <!-- Allow users to deregister. -->
             <tr>
                 <td>Remove a user</td>
-                <td>/users/[id]</td>
+                <td>/users/[username]</td>
                 <td>DELETE</td>
                 <td>None</td>
                 <td>A text message indicating whether user was deregistered
@@ -127,7 +127,7 @@
             <!-- Allow users to add a movie to their favorites list. -->
             <tr>
                 <td>Add a movie object to a user's favorites list</td>
-                <td>/users/[id]/[Title]</td>
+                <td>/users/movies/[movie _id]/</td>
                 <td>POST</td>
                 <td>None</td>
                 <td>A text message indicating whether the movie was successfully added to the user's favorited movies</td>
@@ -136,11 +136,19 @@
             <!-- Allow users to remove a movie from their favorites list. -->
             <tr>
                 <td>Remove a movie from a user's favorites list</td>
-                <td>/users/[id]/[Title]</td>
+                <td>/users/movies/[movie _id]</td>
                 <td>DELETE</td>
                 <td>None</td>
-                <td>A text message indicating whether the movie was successfully removed from the user's favorited movies
-                </td>
+                <td>A text message indicating whether the movie was successfully removed from the user's favorited movies</td>
+            </tr>
+
+            <!-- Allow users to deregister. -->
+            <tr>
+                <td>Removie user from registry</td>
+                <td>/users/[username]</td>
+                <td>DELETE</td>
+                <td>None</td>
+                <td>A text message indicating whether the user was successfully removed from the registry</td>
             </tr>
         </tbody>
     </table>
