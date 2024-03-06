@@ -11,6 +11,13 @@ app.use(bodyParser.json());
 // Set up to use express
 app.use(express.urlencoded({ extended: true }));
 
+// Import auth.js
+let auth = require('./auth')(app);
+
+// Import passport.js
+const passport = require('passport');
+require('./passport');
+
 // setup the logger
 app.use(morgan('common'));
 
@@ -86,10 +93,10 @@ app.get('/users/:username', async (req, res) => {
 });
 
 // READ (Get list of movies)
-app.get('/movies', async (req, res) => {
+app.get('/movies', passport.authenticate('jwt', {session: false }), async (req, res) => {
   await Movies.find()
   .then((movies) => {
-    res.json(movies);
+    res.status(201).json(movies);
   })
   .catch((err) => {
     console.error(err);
