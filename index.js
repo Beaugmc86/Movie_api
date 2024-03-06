@@ -32,17 +32,17 @@ app.get('/', (req, res) => {
 
 // CREATE (Add new user)
 app.post('/users', async (req, res) => {
-  await Users.findOne({ Username: req.body.Username })
+  await Users.findOne({ username: req.body.username })
     .then((user) => {
       if (user) {
         return res.status(400).send(req.body.Username + 'already exists');
       } else {
         Users
           .create({
-            Username: req.body.Username,
-            Password: req.body.Password,
-            Email: req.body.Email,
-            Birthday: req.body.Birthdate
+            username: req.body.username,
+            password: req.body.password,
+            email: req.body.email,
+            birthdate: req.body.birthdate
           })
           .then((user) =>{res.status(201).json(user) })
         .catch((error) => {
@@ -58,32 +58,32 @@ app.post('/users', async (req, res) => {
 });
 
 //READ (Get list of users)
-// app.get('/users', async (req, res) => {
-//   await Users.find()
-//     .then((user) => {
-//       res.json(user);
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//       res.status(500).send('Error: ' + error);
-//     });
-// });
+app.get('/users', async (req, res) => {
+  await Users.find()
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Error: ' + error);
+    });
+});
 
 //READ (Get user by username)
-// app.get('/users/:Username', async (req, res) => {
-//   await Users.findOne({ Username: req.params.Username })
-//     .then((user) => {
-//       if (user) {
-//         res.json(user);
-//       } else {
-//         res.status(404).send('User not found');
-//       }
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//       res.status(500).send('Error: ' + err);
-//     });
-// });
+app.get('/users/:username', async (req, res) => {
+  await Users.findOne({ username: req.params.username })
+    .then((user) => {
+      if (user) {
+        res.json(user);
+      } else {
+        res.status(404).send('User not found');
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
 
 // READ (Get list of movies)
 app.get('/movies', async (req, res) => {
@@ -134,13 +134,13 @@ app.get('/movies/director/:directorName', async (req, res) => {
 });
 
 // UPDATE (Update a user's info, by username)
-app.put('/users/:Username', async (req, res) => {
-  await Users.findOneAndUpdate({ Username: req.params.Username },
+app.put('/users/:username', async (req, res) => {
+  await Users.findOneAndUpdate({ username: req.params.username },
     {$set: {
-      Username: req.body.Username,
-      Password: req.body.Password,
-      Email: req.body.Email,
-      Birthday: req.body.Birthdate
+      username: req.body.username,
+      password: req.body.password,
+      email: req.body.email,
+      birthdate: req.body.birthdate
       }
     },
   { new: true }) // This line makes sure that the updated document is returned
@@ -154,8 +154,8 @@ app.put('/users/:Username', async (req, res) => {
 });
 
 // UPDATE (Add a movie to a user's list of favorites)
-app.post('/users/:Username/movies/:MovieID', async (req, res) => {
-  await Users.findOneAndUpdate({ Username: req.params.Username },
+app.post('/users/:username/movies/:MovieID', async (req, res) => {
+  await Users.findOneAndUpdate({ username: req.params.username },
     {$push: { FavoriteMovies: req.params.MovieID }
   },
   { new: true }) // This line makes sure that the updated document is returned
@@ -169,8 +169,8 @@ app.post('/users/:Username/movies/:MovieID', async (req, res) => {
 });
 
 // DELETE (Remove a movie from a user's list of favorites)
-app.delete('/users/:Username/movies/:MovieID', async (req, res) => {
-  await Users.findOneAndUpdate({ Username: req.params.Username },
+app.delete('/users/:username/movies/:MovieID', async (req, res) => {
+  await Users.findOneAndUpdate({ username: req.params.username },
     {$pull: { FavoriteMovies: req.params.MovieID }
   },
   { new: true }) // This line makes sure that the updated document is returned
@@ -184,13 +184,13 @@ app.delete('/users/:Username/movies/:MovieID', async (req, res) => {
 });
 
 // DELETE (Delete a user by username)
-app.delete('/users/:Username', async (req, res) => {
-  await Users.findOneAndRemove({ Username: req.params.Username })
+app.delete('/users/:username', async (req, res) => {
+  await Users.findOneAndDelete({ username: req.params.username })
     .then((user) => {
       if (!user) {
-        res.status(400).send(req.params.Username + ' was not found');
+        res.status(400).send(req.params.username + ' was not found');
       } else {
-        res.status(200).send(req.params.Username + ' was deleted.');
+        res.status(200).send(req.params.username + ' was deleted.');
       }
     })
     .catch((err) => {
