@@ -9,6 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // Set up to use express
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Import auth.js
