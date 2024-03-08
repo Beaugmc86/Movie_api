@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
   uuid = require('uuid');
+const { check, validationResult } = require('express-validator');
 
 const morgan = require('morgan');
 const app = express();
@@ -14,6 +15,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // Import auth.js
 let auth = require('./auth')(app);
+
+//Import cors
+const cors = require('cors');
+app.use(cors());
 
 // Import passport.js
 const passport = require('passport');
@@ -39,7 +44,22 @@ app.get('/', (req, res) => {
 });
 
 // CREATE (Add new user)
-app.post('/users', async (req, res) => {
+app.post('/users', [
+  //input validation
+  check('username', 'Username is required').isLength({min: 5}),
+  check('username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('password', 'Password is required').notEmpty(),
+  check('email', 'Email does not appear to be valid.').isEmail()
+  ],
+  async (req, res) => {
+  // check validation object for errors
+  let errors = validationResult(req);
+
+  if (!error.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
+  let hashedPassword = Users.hashPassword(req.body.password);
   await Users.findOne({ username: req.body.username })
     .then((user) => {
       if (user) {
@@ -221,6 +241,7 @@ app.use((err, req, res, next) => {
 });
 
 // listen for requests
-app.listen(8080, () => {
-  console.log('Your app is listening on port 8080.');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0',() => {
+ console.log('Listening on Port ' + port);
 });
