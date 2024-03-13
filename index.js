@@ -55,7 +55,7 @@ app.post('/users', [
   // check validation object for errors
   let errors = validationResult(req);
 
-  if (!error.isEmpty()) {
+  if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
   }
 
@@ -68,22 +68,22 @@ app.post('/users', [
         Users
           .create({
             username: req.body.username,
-            password: req.body.password,
+            password: hashedPassword,
             email: req.body.email,
             birthdate: req.body.birthdate
           })
           .then((user) =>{res.status(201).json(user) })
-        .catch((error) => {
-          console.error(error);
-          res.status(500).send('Error: ' + error);
-        })
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send('Error: ' + error);
-    });
-});
+          .catch((error) => {
+            console.error(error);
+            res.status(500).send('Error: ' + error);
+          })
+        }  
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send('Error: ' + error);
+      });
+  });
 
 //READ (Get list of users)
 app.get('/users', passport.authenticate('jwt', {session: false }), async (req, res) => {
