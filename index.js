@@ -33,8 +33,8 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-// mongoose.connect('mongodb://localhost:27017/myFlixDB', { 
-mongoose.connect( process.env.CONNECTION_URI, { 
+mongoose.connect('mongodb://localhost:27017/myFlixDB', { 
+// mongoose.connect( 'mongodb+srv://beaugmc86:d1v0JtqkRGCBcYm3@myflixdb.sbtslkm.mongodb.net/myFlixDB?retryWrites=true&w=majority&appName=myFlixDB', { 
   useNewUrlParser: true, 
   useUnifiedTopology: true,
 });
