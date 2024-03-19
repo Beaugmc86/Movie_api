@@ -163,7 +163,17 @@ app.get('/movies/director/:directorName', passport.authenticate('jwt', {session:
 });
 
 // UPDATE (Update a user's info, by username)
-app.put('/users/:username', passport.authenticate('jwt', {session: false }), async (req, res) => {
+app.put('/users/:username', [
+  //input validation
+  check('username', 'Username is required').isLength({min: 5}),
+  check('username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('password', 'Password is required').notEmpty(),
+  check('email', 'Email does not appear to be valid.').isEmail()
+  ],
+  passport.authenticate('jwt', {session: false }), async (req, res) => {
+  // Check validation object for errors
+  let errors = validationResult(req);
+
   // CONDITION TO CHECK USER
   if(req.user.username !== req.params.username){
     return res.status(400).send('Permission denied');
