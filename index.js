@@ -18,24 +18,6 @@ let auth = require('./auth')(app);
 
 //Import cors
 const cors = require('cors');
-// let allowedOrigins = [
-//   'http://localhost:8080',
-//   'http://localhost:1234',
-//   'http://testsite.com',
-//   'https://be-myflix-9ae503e43319.herokuapp.com'
-// ];
-
-// app.use(cors({
-//   origin: (origin, callback) => {
-//     if(!origin) return callback(null, true);
-//     if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
-//       let message = "The CORS policy for this application doesn’t allow access from origin " + origin;
-//       return callback(new Error(message ), false);
-//     }
-//     return callback(null, true);
-//   }
-// }));
-
 app.use(cors());
 
 // Import passport.js
@@ -185,46 +167,36 @@ app.put('/users/:username', [
   //input validation
   check('username', 'Username is required').isLength({min: 5}),
   check('username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-  // check('password', 'Password is required').notEmpty(),
+  check('password', 'Password is required').notEmpty(),
   check('email', 'Email does not appear to be valid.').isEmail()
   ],
   passport.authenticate('jwt', {session: false }), async (req, res) => {
-
   // Check validation object for errors
   let errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
-  }
 
   // CONDITION TO CHECK USER
   if(req.user.username !== req.params.username){
     return res.status(400).send('Permission denied');
   }
 
-  const updatedUser = {
-    username: req.body.username,
-    email: req.body.email,
-    birthdate: req.body.birthdate,
-  }
-
-  if (req.body.password) {
-    updatedUser.password = Users.hashPassword(req.body.password);
-  }
-
+  let hashedPassword = Users.hashPassword(req.body.password);
   await Users.findOneAndUpdate({ username: req.params.username },
-    {$set: updatedUser },
-
-    { new: true }) // This line makes sure that the updated document is returned
-
-    .then((updatedUser) => {
-      res.json(updatedUser);
-    })
-   .catch((err) => {
+    {$set: {
+      username: req.body.username,
+      password: hashedPassword || req.body.password,
+      email: req.body.email,
+      birthdate: req.body.birthdate
+      }
+    },
+  { new: true }) // This line makes sure that the updated document is returned
+  .then((updatedUser) => {
+    res.json(updatedUser);
+  })
+  .catch((err) => {
     console.error(err);
     res.status(500).send('Error: ' + err);
-    })
-  }
-);
+  })
+});
 
 // UPDATE (Add a movie to a user's list of favorites)
 app.post('/users/:username/movies/:MovieID', passport.authenticate('jwt', {session: false }), async (req, res) => {
