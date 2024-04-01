@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 let auth = require('./auth')(app);
 
 //Import CORS
-// const cors = require('cors');
+const cors = require('cors');
 let allowedOrigins = [
   "http://localhost:8080",
   "http://localhost:1234",
