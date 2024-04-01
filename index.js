@@ -16,9 +16,28 @@ app.use(express.urlencoded({ extended: true }));
 // Import auth.js
 let auth = require('./auth')(app);
 
-//Import cors
-const cors = require('cors');
-app.use(cors());
+//Import CORS
+// const cors = require('cors');
+let allowedOrigins = [
+  "http://localhost:8080",
+  "http://localhost:1234",
+  "http://testsite.com",
+  "https://be-myflix-9ae503e43319.herokuapp.com",
+];
+//allow specific set of origins to access your API
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      // If a specific origin isn't found on the list of allowed origins
+      let message =
+        "The CORS policy for this application doesn't allow access from origin" +
+        origin;
+      return callback(new Error(message), false);
+    }
+    return callback(null, true);
+  },
+}));
 
 // Import passport.js
 const passport = require('passport');
