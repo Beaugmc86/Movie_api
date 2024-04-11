@@ -19,7 +19,6 @@ let auth = require('./auth')(app);
 //Import CORS
 const cors = require('cors');
 let allowedOrigins = [
-  "http://localhost:8080",
   "http://localhost:1234",
   "http://testsite.com",
   "https://be-myflix-9ae503e43319.herokuapp.com",
