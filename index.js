@@ -13,8 +13,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Import auth.js
-let auth = require('./auth')(app);
+
 
 //Import CORS
 const cors = require('cors');
@@ -25,6 +24,9 @@ app.use(cors({
   
 
 }));
+
+// Import auth.js
+let auth = require('./auth')(app);
 
 // Import passport.js
 const passport = require('passport');
