@@ -13,17 +13,12 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-
 //Import CORS
 const cors = require('cors');
 
 let allowedOrigins = ['http://localhost:1234'];
 
-app.use(cors({
-  
-
-}));
+app.use(cors({}));
 
 // Import auth.js
 let auth = require('./auth')(app);
