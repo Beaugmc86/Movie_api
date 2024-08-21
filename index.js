@@ -23,7 +23,8 @@ let allowedOrigins = [
   'http://localhost:1234', 
   'https://be-myflix-9ae503e43319.herokuapp.com',
   'be-myflix.netlify.app',
-  'https://main--be-myflix.netlify.app'
+  'https://main--be-myflix.netlify.app',
+  'https://beaugmc86.github.io'
   ];
 
 app.use(cors({
