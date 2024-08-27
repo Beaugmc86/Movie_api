@@ -2,15 +2,6 @@
 
 A server-side component of "movies" web application. The web application will provide users with access to information about different movies, directors, and genres. Users will be able to sign up, update their personal information, and create a list of their favourite movies.
 
-## Table of Contents
-
-- [Features](#features)
-- [Technologies](#technologies)
-- [Setup](#setup)
-- [API Endpoints](#api-endpoints)
-- [Usage](#usage)
-- [License](#license)
-
 ## Key Features
 
 - **Movies API**: Access movie details including description, genre, director information.
@@ -29,7 +20,6 @@ This application is built using the following technologies:
 - **Swagger**: API documentation tool.
 - **Cors**: Cross-Origin Resource Sharing middleware.
 - **Bcrypt**: Password hashing.
-
 
 ## API Endpoints
 Movies
